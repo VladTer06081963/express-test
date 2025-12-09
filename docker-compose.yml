@@ -21,4 +21,4 @@ services:
 
 networks:
   llm-network:
-    external: true
+    external: bridge
