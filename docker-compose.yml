@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  express:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: sh -c "npm install && node index.js"
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.express.rule=Host(`openaiua.cloud`)"
+      - "traefik.http.routers.express.entrypoints=web,websecure"
+      - "traefik.http.routers.express.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.express.loadbalancer.server.port=3000"
+    networks:
+      - llm-network
+    expose:
+      - "3000"
+
+networks:
+  llm-network:
+    external: true
