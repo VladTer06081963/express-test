@@ -2,11 +2,7 @@ version: '3.8'
 
 services:
   express:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./app:/app
-    command: sh -c "npm install && node index.js"
+    build: ./express
     restart: always
     labels:
       - "traefik.enable=true"
